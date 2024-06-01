@@ -8,6 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://unpkg.com/feather-icons"></script>
     <style>
+         body {
+            background-color: #000;
+            color: #fff;
+        }
         .sidebar {
             position: fixed;
             top: 0;
@@ -16,15 +20,16 @@
             z-index: 1;
             overflow-x: hidden;
             padding-top: 20px;
+            color: #fff
         }
         .main-content {
-            margin-left: 200px; /* Sesuaikan dengan lebar sidebar */
+            margin-left: 200px;
             padding: 20px;
         }
         .transparent-input {
             background-color: transparent;
-            border: 1px solid #ccc; /* Optional: Add border to make it visible */
-            color: #000; /* Optional: Adjust text color */
+            border: 1px solid #ccc; 
+            color: #000; 
         }
     </style>
 </head>
@@ -122,7 +127,7 @@
     <div class="row">
         <div class="col-md-2 bg-light sidebar">
             <!-- Sidebar -->
-            <div class="col-md-2 bg-light sidebar">
+            <div class="col-md-2 bg-light sidebar bg-dark">
                 <div class="profile mt-3 mb-3 d-flex align-items-center">
                     <div class="border rounded-circle ms-3" style="width: 50px; height: 50px; overflow: hidden; object-fit: cover">
                     <a href="{{ route('profile') }}">
@@ -133,7 +138,7 @@
                     </a>
                     </div>
                     <div class="profile-info ms-2">
-                        <a href="{{ route('profile') }}" class="d-block text-truncate nav-link" style="max-width: 150px;">
+                        <a href="{{ route('profile') }}" class="d-block text-truncate nav-link text-white" style="max-width: 150px;">
                             {{ Auth::check() ? Auth::user()->name : 'Guest' }}
                         </a>
                         <a href="{{ route('profile') }}" class="d-block text-truncate" style="max-width: 150px;">
@@ -145,37 +150,37 @@
                 <ul class="nav flex-column">
                     @if (Auth::check())
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('home') }}">
+                            <a class="nav-link text-white" href="{{ route('home') }}">
                                 <i data-feather="home" class="me-2"></i>
                                 <span>Home</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('explore') }}">
+                            <a class="nav-link text-white" href="{{ route('explore') }}">
                                 <i data-feather="search" class="me-2"></i>
                                 <span>Explore</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="#">
+                            <a class="nav-link text-white" href="#">
                                 <i data-feather="bell" class="me-2"></i>
                                 <span>Notifications</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('posting') }}">
+                            <a class="nav-link text-white" href="{{ route('posting') }}">
                                 <i data-feather="plus-circle" class="me-2"></i>
                                 <span>Posting</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="#">
+                            <a class="nav-link text-white" href="#">
                                 <i data-feather="bookmark" class="me-2"></i>
                                 <span>Bookmark</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <a class="nav-link text-white" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i data-feather="arrow-left" class="me-2"></i>
                                 <span>Logout</span>
                             </a>
@@ -185,19 +190,19 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('home') }}">
+                            <a class="nav-link text-white" href="{{ route('home') }}">
                                 <i data-feather="home" class="me-2"></i>
                                 <span>Home</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('explore') }}">
+                            <a class="nav-link text-white" href="{{ route('explore') }}">
                                 <i data-feather="search" class="me-2"></i>
                                 <span>Explore</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('login') }}">
+                            <a class="nav-link text-white" href="{{ route('login') }}">
                                 <i data-feather="arrow-left" class="me-2"></i>
                                 <span>Login</span>
                             </a>

@@ -2,10 +2,12 @@
 
 @section('home')
 <div class="container-fluid">
-    <h3 class="text-center">Gambar</h3>
-    <div class="mt-4 text-center" style="margin-bottom: 40px">
-        <a href="{{ route('home') }}" class="me-3 text-decoration-none text-dark">For you</a>
-        <a href="#" class="text-decoration-none text-dark">Following</a>
+    <div class="text-center">
+        <img src="{{ asset('img/logo-medsos.png') }}" class="text-center" style="width: 50px">
+    </div>
+    <div class="mt-4 text-center position-sticky" style="margin-bottom: 40px">
+        <a href="{{ route('home') }}" class="me-3 text-decoration-none text-white">For you</a>
+        <a href="#" class="text-decoration-none text-white">Following</a>
     </div>
     <div class="row vh-100" style="overflow-y: auto;">
         <!-- Main Content -->
@@ -65,8 +67,8 @@
         </div>
         
         <!-- Sidebar Content -->
-        <div class="col-md-6 mt-5">
-            <div class="position-sticky mx-2" style="top: 51px;">
+        <div class="col-md-6 mt-5" >
+            <div class="position-sticky mx-2 " style="top: 100px;">
                 <h2>Siapa yang harus diikuti</h2>
                 <ul class="list-unstyled">
                     @foreach ($users as $user)

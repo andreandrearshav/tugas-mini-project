@@ -7,8 +7,8 @@
             <div class="row">
                 <h3 class="text-center">Gambar</h3>
                 <div class="mt-4 text-center mb-4">
-                    <a href="#" class="me-3 text-decoration-none text-dark">For you</a>
-                    <a href="#" class="text-decoration-none text-dark">Following</a>
+                    <a href="#" class="me-3 text-decoration-none text-white">For you</a>
+                    <a href="#" class="text-decoration-none text-white">Following</a>
                 </div>
                 <div class="col d-flex justify-content-center">
                     <div class="card" style="width: 100%;">

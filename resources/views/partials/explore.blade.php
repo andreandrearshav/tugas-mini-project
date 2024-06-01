@@ -16,8 +16,8 @@
                 </div>
             </div>
             <!-- Follow Section -->
-            <div class="col-md-5 mt-5">
-                <div class="position-sticky" style="top: 100px;">
+            <div class="col-md-5 mt-5" >
+                <div class="position-sticky"">
                     <h2>Siapa yang harus diikuti</h2>
                     <ul class="list-unstyled">
                         @foreach ($usersToFollow as $user)
