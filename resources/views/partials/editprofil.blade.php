@@ -20,7 +20,7 @@
                 <form method="POST" action="{{ route('update-profile') }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <input type="file" id="profile-image-input" name="profile_image" accept="image/*" style="display: none;" onchange="previewImage(event)">
+                    <input type="file" id="profile-image-input" name="profile_image" style="display: none;" accept="image/*" onchange="previewImage(event)">
                     
                     <div class="form-group mb-3">
                         <label for="username">Username</label>
@@ -37,9 +37,9 @@
                         <textarea class="form-control" id="bio" name="bio" rows="4">{{ old('bio', auth()->user()->bio) }}</textarea>
                     </div>
 
-                    <div class="form-group mb-0">
+                    <div class="form-group mb-0 text-end">
                         <button type="submit" class="btn btn-primary">
-                            Save Changes
+                            Update
                         </button>
                     </div>
                 </form>

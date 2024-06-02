@@ -8,7 +8,7 @@
             <div class="col-8 mt-3 col-sm-9 d-flex flex-column justify-content-center">
                 <div class="col-8 col-sm-9 d-flex align-items-center justify-content-between">
                     <h1 class="mb-0">{{ $user->name }}</h1>
-                    <a href="{{ route('edit-profile') }}" class="text-decoration-none text-dark">
+                    <a href="{{ route('edit-profile') }}" class="text-decoration-none text-white">
                         <i data-feather="settings"></i>
                     </a>
                 </div>

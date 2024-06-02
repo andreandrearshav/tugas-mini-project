@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="imageUpload" class="form-label">Pilih gambar</label>
-                                    <input type="file" class="form-control" id="image" name="image" required>
+                                    <input type="file" class="form-control" id="image" style="display: inline-table" accept="image/*" name="image" required>
                                 </div>
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-primary">Posting</button>

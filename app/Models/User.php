@@ -66,7 +66,7 @@ class User extends Authenticatable
 
     public function bookmarks()
     {
-        return $this->belongsTo(Post::class, 'bookmarks')->withTimestamps();
+        return $this->belongsToMany(Post::class, 'bookmarks')->withTimestamps();
     }
 
     public function likes()
