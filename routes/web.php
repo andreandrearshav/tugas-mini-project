@@ -13,6 +13,8 @@ Route::get('/', function () {
 //user dan follow
 Route::get('user',[AuthController::class, 'user'])->name('user');
 Route::post('/follow/{userId}', [AuthController::class, 'follow'])->name('follow');
+Route::delete('/unfollow/{userId}', [AuthController::class, 'unfollow'])->name('unfollow');
+
 
 
 //dashboard routes

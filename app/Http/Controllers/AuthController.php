@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -26,17 +27,29 @@ class AuthController extends Controller
     public function index()
     {
         $posts = Post::with('user')->latest()->get();
-    
+        $usersToFollow=null;
+        $followingUserId= [];
+        
         // $authUserId = Auth::id();//new
-    
+    if(Auth::check()){
+        
         $usersToFollow = User::where('id', '!=', Auth::id())
             ->whereDoesntHave('followers', function($query) {
                 $query->where('follower_id', Auth::id());
                 // $query->where('follower_id', $authUserId);
             })->get();
+        $followingUserId =Auth::user()->following()->pluck('user_id')->toArray();
         $users=User::where('id','!=',Auth::id())->get();
+    }else{
+        $users=[];
+    }
         // $authUser = Auth::user();
-        return view('home', ['posts' => $posts, 'usersToFollow' => $usersToFollow, 'users'=>$users]);
+        return view('home', [
+            'posts' => $posts, 
+            'usersToFollow' => $usersToFollow, 
+            'users'=>$users,
+            'followingUserId'=>$followingUserId
+        ]);
         
         
         
@@ -99,25 +112,29 @@ class AuthController extends Controller
         return redirect()->route('home')->with('username',$validateData['username']);
     }
 
-    public function follow($userId)
+   function follow($userId)
 {
-    $user = User::find($userId); // Menggunakan $userId untuk mencari pengguna
-    if($user) {
-        $authUser = auth()->user(); // Mengambil pengguna yang sedang login
-
-        // Memastikan pengguna tidak mengikuti dirinya sendiri
+    $user = User::find($userId); // Mendapatkan informasi pengguna yang diikuti
+    if ($user) {
+        $authUser = auth()->user(); // Mengambil informasi pengguna yang sedang login
+    
+        // Pastikan pengguna yang diikuti bukan diri sendiri
         if ($authUser->id !== $user->id) {
-            // Memeriksa apakah pengguna sudah mengikuti pengguna lain
+            // Periksa apakah pengguna sudah mengikuti pengguna lain
             if ($authUser->following()->where('followed_id', $userId)->exists()) {
                 return redirect()->route('home')->with('error', 'You are already following this user');
             } else {
+                // Tambahkan pengguna baru ke daftar yang diikuti
+                $authUser->following()->attach($userId, ['user_id' => $authUser->id]);
                 
-                // Melakukan tindakan mengikuti jika pengguna belum mengikuti pengguna lain
-                // $authUser->following()->syncWithoutDetaching($userId);
-                $authUser->following()->attach($userId,['user_id' => $authUser->id]);
-                // $authUser->following()->attach($userId);
-                return redirect()->route('home')->with('success', 'Followed successfully');
-                // return redirect()->route('home')->with('success', 'Followed successfully');
+                // Ambil daftar pengguna yang belum diikuti, termasuk yang baru saja diikuti
+                $usersToFollow = User::where('id', '!=', Auth::id())
+                    ->whereDoesntHave('followers', function ($query) {
+                        $query->where('follower_id', Auth::id());
+                    })->get();
+    
+                // Kembalikan tampilan ke halaman beranda dengan pesan sukses
+                return redirect()->route('home')->with('success', 'Followed successfully')->with('usersToFollow', $usersToFollow);
             }
         } else {
             return redirect()->route('home')->with('error', 'You cannot follow yourself');
@@ -128,6 +145,47 @@ class AuthController extends Controller
     }
 }
 
+    public function unfollow($userId)
+{
+    $authUser = auth()->user();
+    $userToUnfollow = User::find($userId);
 
-
+    if ($userToUnfollow && $userToUnfollow->id !== $authUser->id) {
+        $authUser->following()->detach($userToUnfollow->id);
+        return redirect()->route('home')->with('success', 'Unfollowed successfully');
+    } else {
+        return redirect()->route('home')->with('error', 'User not found or you cannot unfollow yourself');
+    }
 }
+
+
+    
+    
+    // {
+    // $user = User::find($userId); // Menggunakan $userId untuk mencari pengguna
+    // if($user) {
+    //     $authUser = auth()->user(); // Mengambil pengguna yang sedang login
+
+    //     // Memastikan pengguna tidak mengikuti dirinya sendiri
+    //     if ($authUser->id !== $user->id) {
+    //         // Memeriksa apakah pengguna sudah mengikuti pengguna lain
+    //         if ($authUser->following()->where('followed_id', $userId)->exists()) {
+    //             return redirect()->route('home')->with('error', 'You are already following this user');
+    //         } else {
+                
+    //             // Melakukan tindakan mengikuti jika pengguna belum mengikuti pengguna lain
+    //             // $authUser->following()->syncWithoutDetaching($userId);
+    //             $authUser->following()->attach($userId,['user_id' => $authUser->id]);
+    //             // $authUser->following()->attach($userId);
+    //             return redirect()->route('home')->with('success', 'Followed successfully');
+    //             // return redirect()->route('home')->with('success', 'Followed successfully');
+    //         }
+    //     } else {
+    //         return redirect()->route('home')->with('error', 'You cannot follow yourself');
+    //     }
+    // } else {
+    //     // Jika pengguna tidak ditemukan
+    //     return redirect()->route('home')->with('error', 'User not found');
+    // }
+}
+// }

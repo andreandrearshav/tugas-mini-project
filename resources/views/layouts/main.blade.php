@@ -32,7 +32,7 @@
             color: #000; 
         }
 
-        .nav-link {
+        /* .nav-link {
             color: white;
         }
         .nav-link.active .feather{
@@ -41,7 +41,7 @@
 
         .feather{
             stroke: white;
-        }
+        } */
     </style>
 </head>
 <body>
@@ -149,17 +149,17 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             feather.replace();
-            var navLinks = document.querySelectorAll('.nav-link');
+            // var navLinks = document.querySelectorAll('.nav-link');
 
-            navLinks.forEach(function (navLink) {
-                navLink.addEventListener('click', function() {
-                    navLinks.forEach(function(nav){
-                        nav.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    feather.replace({'stroke': 'green'});
-                });
-            });
+            // navLinks.forEach(function (navLink) {
+            //     navLink.addEventListener('click', function() {
+            //         navLinks.forEach(function(nav){
+            //             nav.classList.remove('active');
+            //         });
+            //         // this.classList.add('active');
+            //         // feather.replace({'stroke': 'green'});
+            //     });
+            // });
         });
     </script>
 </body>

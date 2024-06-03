@@ -9,16 +9,29 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function explore()
+    public function explore(Request $request)
     {
         $authUser = Auth::user();
+        $query = $request->input('search');
+        
         $usersToFollow = User::whereDoesntHave('followers', function ($query) use ($authUser) {
             $query->where('follower_id', $authUser->id);
-        })->where('id', '!=', $authUser->id)->get();
-      
-        return view('partials.explore', compact('usersToFollow'));
-        // return view('partials.explore', compact('user'));
+        })->where('id', '!=', $authUser->id);
+
+        if ($query) {
+            $usersToFollow->where('name', 'like', '%' . $query . '%');
+        }
+
+        $usersToFollow = $usersToFollow->get();
+        $searchedUsers =User::where('name', 'like', '%' . $query . '%')
+        
+        ->where('id', '!=', $authUser->id)
+        ->get();
+
+        return view('partials.explore', compact('usersToFollow', 'query', 'searchedUsers'));
     }
+        // return view('partials.explore', compact('user'));
+    
     
     public function post()
     {
@@ -56,10 +69,10 @@ class UserController extends Controller
         $user->profile_image = $profileImagePath;
     }
 
-    $user->username = $request->username;
-    $user->name = $request->name;
-    $user->bio = $request->bio;
-    $user->save();
+            $user->username = $request->username;
+            $user->name = $request->name;
+            $user->bio = $request->bio;
+            $user->save();
 
     return redirect()->route('profile')->with('success', 'Profile updated successfully.');
 

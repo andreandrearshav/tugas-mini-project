@@ -51,7 +51,7 @@
                                     <li class="d-flex align-items-center w-100">
                                         <a href="" class="text-decoration-none text-dark" data-post-id="{{ $post->id }}">
                                             <i data-feather="bookmark" class="me-2"></i>
-                                            <span>Faorit</span>
+                                            <span>Faforit</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -71,6 +71,14 @@
             <div class="position-sticky mx-2 " style="top: 100px;">
                 <h2>Siapa yang harus diikuti</h2>
                 <ul class="list-unstyled">
+                    @if(auth()->check())
+                    @php
+                        $followingUser= null; // Mendefinisikan variabel dengan nilai awal null
+                            if (auth()->check()) {
+                                $followingUser = auth()->user()->following()->pluck('followed_id')->toArray();
+                            }
+                    @endphp
+                @endif
                     @foreach ($users as $user)
                         <li class="d-flex align-items-center mb-2">
                             @if ($user->profile_image)
@@ -83,14 +91,20 @@
                             <div class="d-flex flex-column flex-grow-1">
                                 <span>{{ $user->name }}</span>
                             </div>
-                            {{-- @if ($authUser && !$authUser->following->contains($user->id)) --}}
+                            @if (in_array($user->id, $followingUser))
+                                <form action="{{ route('unfollow', $user->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Unfollow</button>
+                                </form>
+                            @else
                             <span class="ms-auto">
                                 <form action="{{ route('follow', $user->id) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-primary">Follow</button>
                                 </form>
                             </span>
-                            {{-- @endif --}}
+                            @endif
                                 
                         </li>
                     @endforeach
@@ -104,77 +118,77 @@
 
 @section('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.like-post').forEach(function (element) {
-        element.addEventListener('click', function (e) {
-            e.preventDefault();
-            const postId = this.dataset.postId;
-            fetch(`/posts/${postId}/like`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    this.classList.toggle('active');
-                    alert(data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    });
+// document.addEventListener('DOMContentLoaded', function () {
+//     document.querySelectorAll('.like-post').forEach(function (element) {
+//         element.addEventListener('click', function (e) {
+//             e.preventDefault();
+//             const postId = this.dataset.postId;
+//             fetch(`/posts/${postId}/like`, {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+//                 }
+//             })
+//             .then(response => response.json())
+//             .then(data => {
+//                 if (data.status === 'success') {
+//                     this.classList.toggle('active');
+//                     alert(data.message);
+//                 }
+//             })
+//             .catch(error => console.error('Error:', error));
+//         });
+//     });
 
-    document.querySelectorAll('.comment-post').forEach(function (element) {
-        element.addEventListener('click', function (e) {
-            e.preventDefault();
-            const postId = this.dataset.postId;
-            const comment = prompt("Enter your comment:");
-            if (comment) {
-                fetch(`/posts/${postId}/comment`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({ comment: comment })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        this.classList.toggle('commented');
-                        alert(data.message);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            }
-        });
-    });
+//     document.querySelectorAll('.comment-post').forEach(function (element) {
+//         element.addEventListener('click', function (e) {
+//             e.preventDefault();
+//             const postId = this.dataset.postId;
+//             const comment = prompt("Enter your comment:");
+//             if (comment) {
+//                 fetch(`/posts/${postId}/comment`, {
+//                     method: 'POST',
+//                     headers: {
+//                         'Content-Type': 'application/json',
+//                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+//                     },
+//                     body: JSON.stringify({ comment: comment })
+//                 })
+//                 .then(response => response.json())
+//                 .then(data => {
+//                     if (data.status === 'success') {
+//                         this.classList.toggle('commented');
+//                         alert(data.message);
+//                     }
+//                 })
+//                 .catch(error => console.error('Error:', error));
+//             }
+//         });
+//     });
 
-    document.querySelectorAll('.bookmark-post').forEach(function (element) {
-        element.addEventListener('click', function (e) {
-            e.preventDefault();
-            const postId = this.dataset.postId;
-            fetch(`/posts/${postId}/bookmark`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    this.classList.toggle('bookmarked');
-                    alert(data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    });
-});
+//     document.querySelectorAll('.bookmark-post').forEach(function (element) {
+//         element.addEventListener('click', function (e) {
+//             e.preventDefault();
+//             const postId = this.dataset.postId;
+//             fetch(`/posts/${postId}/bookmark`, {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+//                 }
+//             })
+//             .then(response => response.json())
+//             .then(data => {
+//                 if (data.status === 'success') {
+//                     this.classList.toggle('bookmarked');
+//                     alert(data.message);
+//                 }
+//             })
+//             .catch(error => console.error('Error:', error));
+//         });
+//     });
+// });
 </script>
 @endsection
 
