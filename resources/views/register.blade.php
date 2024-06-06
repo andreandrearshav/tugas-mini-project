@@ -7,27 +7,52 @@
             <div class="card">
                 <h1 class="text-center">Register</h1>
                 <div class="card-body">
+                    
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="username">User Name:</label>
-                            <input type="text" class="form-control mt-3" id="username" name="username" required autofocus>
+                            <input type="text" class="form-control mt-3" id="username" value="{{ old('username') }}" name="username" required autofocus>
+                            @error('username')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group mb-3">
                             <label for="name">Name:</label>
-                            <input type="text" class="form-control mt-3" id="name" name="name" required autofocus>
+                            <input type="text" class="form-control mt-3" id="name" value="{{ old('name') }}" name="name" required autofocus>
+                            @error('name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="form-group mb-3">
                             <label for="email">Email:</label>
-                            <input type="email" class="form-control mt-3" id="email" name="email" required>
+                            <input type="email" class="form-control mt-3" id="email" value="{{ old('email') }}" name="email" required>
+                            @error('email')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="form-group mb-3">
                             <label for="password">Password:</label>
-                            <input type="password" class="form-control mt-3" id="password" name="password" required>
+                            <input type="password" class="form-control mt-3" id="password" value="{{ old('password') }}" name="password" required>
+                            @error('password')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="form-group mb-3">
                             <label for="password_confirmation">Confirm Password:</label>
-                            <input type="password" class="form-control mt-3" id="password_confirmation" name="password_confirmation" required>
+                            <input type="password" class="form-control mt-3" id="password_confirmation" value="{{ old('password_confirmation') }}" name="password_confirmation" required>
+                            @error('password_confirmation')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         </div>
                         <button type="submit" class="btn btn-primary mb-3 w-100">Login</button>
                         <p class="text-center">Sudah punya akun ? 

@@ -30,9 +30,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-//user
-Route::get('/explore',[UserController::class,'explore'])->name('explore');
-Route::get('/posting',[UserController::class,'post'])->name('posting');
 
 //post
 Route::post('/post',[PostController::class,'post'])->name('post.store');
@@ -49,10 +46,16 @@ Route::post('/posts/{post}/like', [PostController::class, 'like'])->name('posts.
 Route::post('/posts/{post}/comment', [PostController::class, 'comment'])->name('posts.comment');
 Route::post('/posts/{post}/bookmark', [PostController::class, 'bookmark'])->name('posts.bookmark');
 
-//profile
+// user & profile 
+
+Route::get('/explore',[UserController::class,'explore'])->name('explore');
+Route::get('/posting',[UserController::class,'post'])->name('posting');
+Route::get('notifikasi',[UserController::class,'notifikasi'])->name('notifikasi');
+
 Route::get('/profile', [UserController::class, 'profile'])->name('profile');
 Route::get('/edit-profile', [UserController::class, 'editprofile'])->name('edit-profile');
 Route::put('/edit-profile', [UserController::class, 'updateProfile'])->name('update-profile');
+Route::get('/following',[UserController::class, 'following'])->name('following');
 
 
 

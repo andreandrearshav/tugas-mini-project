@@ -43,6 +43,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
@@ -55,13 +60,14 @@ class User extends Authenticatable
 
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id')->withTimestamps();
+        // return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'followed_id')->withTimestamps();
     }
 
     public function following()
     {
-        return $this->belongsToMany(User::class, 'followers', 'follower_id','followed_id' )->withTimestamps();
-        // return $this->belongsToMany(User::class, 'followers', 'followed_id', 'user')->withTimestamps();
+        // return $this->belongsToMany(User::class, 'followers', 'follower_id','followed_id' )->withTimestamps();
+        return $this->belongsToMany(User::class, 'followers', 'followed_id', 'follower_id')->withTimestamps();
     }
 
     public function bookmarks()

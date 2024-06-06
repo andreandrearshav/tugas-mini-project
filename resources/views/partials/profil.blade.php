@@ -2,9 +2,10 @@
 @section('content')
     <div class="container">
         <div class="row ">
-            <div class="col mt-4 col-sm-3">
-                <img src="{{ asset($user->profile_image ? 'storage/' . $user->profile_image : 'img/default-profile.png') }}" class="mx-5 border border-dark rounded-circle" style="height: 100px; widht: 100px" alt="">
+            <div class="col mt-4 mx-5 col-sm-5 d-flex justify-content-center align-items-center" style="overflow: hidden; height: 100px; width: 100px; border-radius: 50%;">
+                <img src="{{ asset($user->profile_image ? 'storage/' . $user->profile_image : 'img/default-profile.png') }}" class="border border-light" style="height: 100%; object-fit: cover;" alt="">
             </div>
+            
             <div class="col-8 mt-3 col-sm-9 d-flex flex-column justify-content-center">
                 <div class="col-8 col-sm-9 d-flex align-items-center justify-content-between">
                     <h1 class="mb-0">{{ $user->name }}</h1>

@@ -87,7 +87,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">
+                            <a class="nav-link text-white" href="{{ route('notifikasi') }}">
                                 <i data-feather="bell" class="me-2"></i>
                                 <span>Notifications</span>
                             </a>
@@ -147,7 +147,7 @@
     @endif
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        // document.addEventListener('DOMContentLoaded', function () {
             feather.replace();
             // var navLinks = document.querySelectorAll('.nav-link');
 
@@ -160,7 +160,7 @@
             //         // feather.replace({'stroke': 'green'});
             //     });
             // });
-        });
+        // });
     </script>
 </body>
 </html>

@@ -12,7 +12,7 @@ class CommentsController extends Controller
     public function comment(Post $post)
     {
         $comments = $post->comments()->with('user', 'replies.user')->get();
-        return view('partials.comments', compact('post', 'comments'));
+        return view('partials.comments', compact('post', 'comments', ));
     }
 
    public function store(Request $request, Post $post)
